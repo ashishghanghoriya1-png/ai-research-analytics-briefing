@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDUSTRIAL BRUTALIST // AI TELEMETRY BRIEFING</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* INDUSTRIAL BRUTALIST SYSTEM SPECIFICATION */
+    :root {
+      --bg-color: #F4F4F0;
+      --text-color: #050505;
+      --border-color: #050505;
+      --accent-color: #E61919;
+      --grid-line: rgba(5, 5, 5, 0.15);
+      --card-bg: #FFFFFF;
+      --subtle-text: #555555;
+      --scanline-opacity: 0;
+    }
+
+    body.mode-crt {
+      --bg-color: #0A0A0A;
+      --text-color: #EAEAEA;
+      --border-color: #262626;
+      --accent-color: #FF2A2A;
+      --grid-line: rgba(255, 255, 255, 0.08);
+      --card-bg: #121212;
+      --subtle-text: #888888;
+      --scanline-opacity: 0.12;
+    }
+
+    * {
+      border-radius: 0px !important; /* STRICT 90-DEGREE GEOMETRY */
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      overflow-x: hidden;
+    }
+
+    .font-macro {
+      font-family: 'Archivo Black', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      line-height: 0.88;
+    }
+
+    .font-mono-tech {
+      font-family: 'Space Mono', 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    /* CRT SCANLINE OVERLAY */
+    .crt-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+        rgba(0, 0, 0, var(--scanline-opacity)) 4px
+      );
+    }
+
+    /* GRID BACKGROUND PATTERN */
+    .blueprint-grid {
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* TECHNICAL BORDERS & CROSSHAIRS */
+    .tech-box {
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      position: relative;
+    }
+
+    .tech-corner-plus::before {
+      content: '+';
+      position: absolute;
+      top: -8px;
+      left: -5px;
+      font-size: 14px;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .tech-corner-plus::after {
+      content: '+';
+      position: absolute;
+      bottom: -8px;
+      right: -5px;
+      font-size: 14px;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    /* BUTTONS */
+    .btn-brutal {
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      transition: all 0.1s ease;
+      cursor: pointer;
+    }
+    .btn-brutal:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+    .btn-brutal-danger {
+      background: var(--accent-color);
+      color: #FFFFFF;
+      border: 1px solid var(--accent-color);
+    }
+    .btn-brutal-danger:hover {
+      background: var(--text-color);
+      color: var(--accent-color);
+      border-color: var(--text-color);
+    }
+
+    /* GLITCH EFFECT ON HOVER */
+    .glitch-hover:hover {
+      animation: glitch-anim 0.2s steps(2) infinite;
+    }
+    @keyframes glitch-anim {
+      0% { transform: translate(1px, -1px); }
+      50% { transform: translate(-1px, 1px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body class="blueprint-grid min-h-screen flex flex-col justify-between p-4 md:p-8">
+
+  <!-- CRT SCANLINE SIMULATOR -->
+  <div class="crt-overlay"></div>
+
+  <!-- TOP HEADER / TELEMETRY STATUS BAR -->
+  <header class="tech-box tech-corner-plus p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center space-x-3">
+      <span class="w-3 h-3 bg-red-600 inline-block animate-pulse"></span>
+      <span class="font-bold text-sm tracking-widest">[ SYSTEM TELEMETRY // AI-RES-2026 ]</span>
+      <span class="text-xs opacity-60 hidden md:inline">| SPEC: SWISS_INDUSTRIAL_V4</span>
+    </div>
+
+    <!-- METADATA READOUT -->
+    <div class="text-xs space-x-4 font-mono-tech">
+      <span>LAT: 28.6139°N</span>
+      <span>LON: 77.2090°E</span>
+      <span class="text-red-600 font-bold">STATUS: ARMED</span>
+    </div>
+
+    <!-- MODE TOGGLE CONTROLS -->
+    <div class="flex items-center space-x-2">
+      <button onclick="setTheme('swiss')" id="btn-swiss" class="btn-brutal text-xs">
+        [ SWISS PRINT ]
+      </button>
+      <button onclick="setTheme('crt')" id="btn-crt" class="btn-brutal text-xs">
+        [ CRT TERMINAL ]
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN HERO SECTION -->
+  <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+    
+    <!-- LEFT COLUMN: MONOLITHIC MACRO HEADLINE -->
+    <section class="lg:col-span-8 tech-box p-6 md:p-10 flex flex-col justify-between border-2">
+      <div class="mb-8">
+        <div class="flex items-center justify-between text-xs font-mono-tech mb-4 border-b border-current pb-2">
+          <span>CLASSIFICATION: EXECUTIVE STRATEGY</span>
+          <span class="text-red-600">REV: 04 // 2026</span>
+        </div>
+        
+        <h1 class="font-macro text-5xl sm:text-7xl md:text-8xl lg:text-9xl mb-6">
+          AUGMENT<br>
+          <span class="text-red-600">ANALYTICS</span><br>
+          WITH AI
+        </h1>
+
+        <p class="text-sm md:text-base font-mono max-w-2xl leading-relaxed opacity-90 border-l-2 border-red-600 pl-4 py-1">
+          Zero-shot qualitative transcript processing, high-density econometric modeling via TabFM, and deep reasoning architectures engineered for field research synthesis.
+        </p>
+      </div>
+
+      <!-- ACTION MATRIX -->
+      <div class="pt-6 border-t border-current flex flex-wrap items-center gap-4">
+        <button onclick="switchTab(1)" class="btn-brutal-danger text-sm">
+          ▶ INITIATE SEQUENCE
+        </button>
+        <button onclick="toggleDataStream()" class="btn-brutal text-sm">
+          [ STREAM RAW LOGS ]
+        </button>
+        <span class="text-xs font-mono opacity-60 ml-auto">BUILD_HASH: 0x89F4A2</span>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: TELEMETRY METRICS & BARCODE -->
+    <section class="lg:col-span-4 flex flex-col gap-6">
+      
+      <!-- CARD 1: ZERO-SHOT SPEED -->
+      <div class="tech-box p-6 flex-1 flex flex-col justify-between">
+        <div class="flex justify-between items-start text-xs font-mono-tech mb-2">
+          <span>MODULE: QWEN_2.5</span>
+          <span class="text-red-600">[ 98.4% ]</span>
+        </div>
+        <div class="font-macro text-5xl sm:text-6xl text-red-600 my-2">12.4x</div>
+        <div class="text-xs font-mono opacity-80 border-t border-current pt-2 mt-2">
+          QUALITATIVE CODING VELOCITY GAIN OVER MANUAL OBSERVER NOTES
+        </div>
+      </div>
+
+      <!-- CARD 2: TABFM FORECAST ACCURACY -->
+      <div class="tech-box p-6 flex-1 flex flex-col justify-between">
+        <div class="flex justify-between items-start text-xs font-mono-tech mb-2">
+          <span>MODULE: TABFM_ECON</span>
+          <span class="text-red-600">[ ACTIVE ]</span>
+        </div>
+        <div class="font-macro text-5xl sm:text-6xl my-2">99.1%</div>
+        <div class="text-xs font-mono opacity-80 border-t border-current pt-2 mt-2">
+          PREDICTIVE FIT ON FIELD SURVEY ECONOMETRIC DATASETS
+        </div>
+      </div>
+
+      <!-- BARCODE / IDENTIFIER -->
+      <div class="tech-box p-4 flex flex-col items-center justify-center bg-current text-background">
+        <div class="font-mono text-xs tracking-widest mb-1 opacity-80" style="color: var(--bg-color);">UNIT SERIAL ID</div>
+        <div class="h-10 w-full flex justify-between items-center px-4" style="background: var(--text-color);">
+          <div class="h-full w-1 bg-red-600"></div>
+          <div class="h-full w-2" style="background: var(--bg-color);"></div>
+          <div class="h-full w-1" style="background: var(--bg-color);"></div>
+          <div class="h-full w-3" style="background: var(--bg-color);"></div>
+          <div class="h-full w-1" style="background: var(--bg-color);"></div>
+          <div class="h-full w-2 bg-red-600"></div>
+          <div class="h-full w-4" style="background: var(--bg-color);"></div>
+          <div class="h-full w-1" style="background: var(--bg-color);"></div>
+          <div class="h-full w-2" style="background: var(--bg-color);"></div>
+          <div class="h-full w-1" style="background: var(--bg-color);"></div>
+        </div>
+        <div class="font-mono text-xs tracking-widest mt-1" style="color: var(--bg-color);">* AI-RESEARCH-2026-BRUTAL *</div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- BLUEPRINT DATA MATRIX SECTION -->
+  <section class="tech-box p-6 md:p-8 mb-8">
+    <div class="flex items-center justify-between border-b border-current pb-4 mb-6">
+      <h2 class="font-macro text-2xl md:text-4xl flex items-center gap-3">
+        <span class="w-4 h-4 bg-red-600 inline-block"></span>
+        FIELD OBSERVATION // TELEMETRY DATA MATRIX
+      </h2>
+      <span class="text-xs font-mono-tech opacity-70">[ TAB 01 / 04 ]</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- DATA PANEL A -->
+      <div class="border border-current p-5">
+        <div class="text-xs font-mono-tech text-red-600 mb-2">// PANEL_01: FIELD PHOTO ANALYSIS</div>
+        <h3 class="font-macro text-xl mb-3">CLASSROOM OBSERVATIONS</h3>
+        <p class="text-xs font-mono leading-relaxed mb-4">
+          Synthesizing raw observer notes from Indian Government School classroom interventions. Direct multi-modal extraction of student engagement vectors.
+        </p>
+        <div class="text-xs font-mono border-t border-current pt-2 flex justify-between">
+          <span>SAMPLES: 1,420</span>
+          <span class="font-bold">CONF: HIGH</span>
+        </div>
+      </div>
+
+      <!-- DATA PANEL B -->
+      <div class="border border-current p-5">
+        <div class="text-xs font-mono-tech text-red-600 mb-2">// PANEL_02: DEEPSEEK-R1 REASONING</div>
+        <h3 class="font-macro text-xl mb-3">SYNTACTIC PARSING</h3>
+        <p class="text-xs font-mono leading-relaxed mb-4">
+          Chain-of-thought verification engine evaluating transcript sentiment vs quantitative test score deltas. Zero hallucination tolerance.
+        </p>
+        <div class="text-xs font-mono border-t border-current pt-2 flex justify-between">
+          <span>LATENCY: 42ms</span>
+          <span class="font-bold">VERIFIED</span>
+        </div>
+      </div>
+
+      <!-- DATA PANEL C -->
+      <div class="border border-current p-5">
+        <div class="text-xs font-mono-tech text-red-600 mb-2">// PANEL_03: STREAMLIT CO-PILOT</div>
+        <h3 class="font-macro text-xl mb-3">INTERACTIVE DASHBOARD</h3>
+        <p class="text-xs font-mono leading-relaxed mb-4">
+          Real-time parameter exploration allowing researchers to isolate qualitative themes and export production-ready SPSS/R data frames.
+        </p>
+        <div class="text-xs font-mono border-t border-current pt-2 flex justify-between">
+          <span>PORT: 8501</span>
+          <span class="font-bold text-red-600">LIVE</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIVE RAW LOG CONSOLE (TOGGLEABLE) -->
+  <section id="console-stream" class="tech-box p-4 hidden mb-8 border-2 border-red-600">
+    <div class="flex justify-between items-center border-b border-red-600 pb-2 mb-3">
+      <span class="text-xs font-mono-tech text-red-600 font-bold">[ LIVE TELEMETRY LOG STREAM ]</span>
+      <button onclick="toggleDataStream()" class="text-xs font-mono hover:underline">[ CLOSE LOGS ]</button>
+    </div>
+    <div class="font-mono text-xs space-y-1 h-32 overflow-y-auto" id="log-content">
+      <div>[22:09:14] SYS_INIT :: Loading Qwen-2.5 72B Qualitative Model... OK</div>
+      <div>[22:09:14] TABFM_ENGINE :: Ingesting 4,800 survey response vectors... OK</div>
+      <div>[22:09:15] REASONING :: DeepSeek-R1 CoT verification step 14/14... VERIFIED</div>
+      <div class="text-red-600">[22:09:15] ALERT :: Field photo classroom notes tokenized (gov_school_classroom.jpg)</div>
+    </div>
+  </section>
+
+  <!-- FOOTER TECHNICAL METADATA -->
+  <footer class="tech-box p-4 text-xs font-mono-tech flex flex-wrap justify-between items-center gap-4">
+    <div>
+      <span>SYSTEM: ANTIGRAVITY INDUSTRIAL BRUTALIST ENGINE</span>
+      <span class="mx-2 text-red-600">|</span>
+      <span>DESIGN_SYSTEM: MILITARY_TELEMETRY_V1</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span>NO_BORDER_RADIUS_ENFORCED</span>
+      <span>[ RESTRICTED ACCESS ]</span>
+    </div>
+  </footer>
+
+  <script>
+    function setTheme(mode) {
+      if (mode === 'crt') {
+        document.body.classList.add('mode-crt');
+        document.getElementById('btn-crt').style.borderColor = 'var(--accent-color)';
+        document.getElementById('btn-swiss').style.borderColor = 'var(--border-color)';
+      } else {
+        document.body.classList.remove('mode-crt');
+        document.getElementById('btn-swiss').style.borderColor = 'var(--accent-color)';
+        document.getElementById('btn-crt').style.borderColor = 'var(--border-color)';
+      }
+    }
+
+    function toggleDataStream() {
+      const consoleBox = document.getElementById('console-stream');
+      consoleBox.classList.toggle('hidden');
+    }
+
+    function switchTab(num) {
+      const logContent = document.getElementById('log-content');
+      const time = new Date().toLocaleTimeString();
+      logContent.innerHTML += `<div>[${time}] USER_ACTION :: Executed Tab Switch sequence #${num}... OK</div>`;
+      logContent.scrollTop = logContent.scrollHeight;
+    }
+
+    // Default to Swiss Print
+    setTheme('swiss');
+  </script>
+</body>
+</html>

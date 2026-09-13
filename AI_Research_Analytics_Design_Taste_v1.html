@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Analytics & Research Briefing (Design Taste Frontend v1)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@500;700;800;900&family=Satoshi:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* DESIGN TASTE FRONTEND V1 SYSTEM CONFIGURATION
+       VARIANCE: 8 | MOTION: 6 | DENSITY: 4 */
+
+    body {
+      font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display {
+      font-family: 'Cabinet Grotesk', sans-serif;
+      letter-spacing: -0.035em;
+    }
+
+    .font-mono-data {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* BENTO 2.0 DIFFUSION SHADOWS & ROUNDED SURFACES */
+    .bento-v1-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .bento-v1-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+      border-color: rgba(2, 132, 199, 0.3);
+    }
+
+    /* LIQUID GLASS REFRACTION BADGE */
+    .glass-badge {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 1), 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    /* DYNAMIC ISLAND COMPONENT */
+    .dynamic-island {
+      background: #0F172A;
+      color: #F8FAFC;
+      border-radius: 9999px;
+      box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.25);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* TYPEWRITER BLINKING CURSOR */
+    .typewriter-cursor::after {
+      content: '|';
+      animation: blink 1s infinite;
+      color: #0284C7;
+      font-weight: bold;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* SPRING ACCENT INDICATOR */
+    .spring-dot {
+      animation: springPulse 2s infinite cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes springPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body class="min-h-[100dvh] flex flex-col justify-between p-4 md:p-10">
+
+  <!-- TOP BAR & DYNAMIC ISLAND -->
+  <header class="max-w-7xl mx-auto w-full flex items-center justify-between mb-12">
+    <!-- BRAND IDENTITY -->
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-display font-extrabold text-xl shadow-md">
+        A
+      </div>
+      <div>
+        <span class="font-display font-bold text-lg text-slate-900 tracking-tight block leading-none">Antigravity</span>
+        <span class="text-xs font-mono-data text-slate-500">RES_INTELLIGENCE // V1.0</span>
+      </div>
+    </div>
+
+    <!-- DYNAMIC ISLAND STATUS CONTAINER -->
+    <div class="dynamic-island px-5 py-2.5 flex items-center space-x-3 text-xs font-mono-data">
+      <span class="w-2.5 h-2.5 rounded-full bg-sky-400 spring-dot"></span>
+      <span class="text-slate-300">COPILOT ENGINE:</span>
+      <span class="text-white font-semibold" id="island-status">QWEN 2.5 READY</span>
+    </div>
+
+    <!-- ACTION BUTTON -->
+    <button onclick="triggerAnalysis()" class="hidden sm:flex items-center space-x-2 bg-slate-900 hover:bg-sky-600 text-white font-semibold text-xs px-5 py-3 rounded-2xl transition-all shadow-md active:scale-95">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      <span>RUN PIPELINE</span>
+    </button>
+  </header>
+
+  <!-- ASYMMETRIC HERO SECTION (DESIGN VARIANCE: 8) -->
+  <main class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-start">
+    
+    <!-- LEFT COLUMN: ASYMMETRIC HEADLINE (7 COLS) -->
+    <div class="lg:col-span-7 flex flex-col justify-between">
+      <div class="glass-badge inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6 w-max">
+        <span class="text-sky-600 font-mono-data text-xs font-semibold">FIELD RESEARCH SYNTHESIS</span>
+        <span class="text-slate-300">•</span>
+        <span class="text-slate-600 text-xs">GOVT SCHOOL STUDY</span>
+      </div>
+
+      <h1 class="font-display font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-slate-900 leading-[0.92] mb-6">
+        Augmenting<br>
+        <span class="text-sky-600">Research & Analytics</span><br>
+        with AI Copilots.
+      </h1>
+
+      <p class="text-slate-600 text-lg md:text-xl max-w-[55ch] leading-relaxed mb-8">
+        Integrating zero-shot qualitative transcript coding with TabFM econometric modeling for rapid field observer insights.
+      </p>
+
+      <!-- TYPEWRITER COMMAND INPUT CARD -->
+      <div class="bento-v1-card p-4 sm:p-6 max-w-xl">
+        <div class="flex items-center justify-between text-xs font-mono-tech text-slate-400 mb-3 border-b border-slate-100 pb-2">
+          <span>AI COMMAND PROMPT</span>
+          <span class="text-sky-600 font-semibold">AUTO_EXECUTE</span>
+        </div>
+        <div class="font-mono-data text-sm text-slate-800 h-10 flex items-center">
+          <span class="text-sky-600 font-bold mr-2">&gt;</span>
+          <span id="typewriter-text" class="typewriter-cursor"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: METRIC BENTO STACK (5 COLS) -->
+    <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+      
+      <!-- CARD 1: QUALITATIVE SPEED -->
+      <div class="bento-v1-card p-8 flex flex-col justify-between">
+        <div class="flex items-center justify-between text-xs font-mono-data text-slate-500 mb-4">
+          <span>QUALITATIVE CODING</span>
+          <span class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 font-semibold">Qwen 2.5 72B</span>
+        </div>
+        <div class="font-display font-black text-6xl text-slate-900 mb-2">12.4x</div>
+        <p class="text-xs text-slate-500 font-medium">
+          Velocity gain in classifying semi-structured classroom observation logs.
+        </p>
+      </div>
+
+      <!-- CARD 2: ECONOMETRIC ACCURACY -->
+      <div class="bento-v1-card p-8 flex flex-col justify-between">
+        <div class="flex items-center justify-between text-xs font-mono-data text-slate-500 mb-4">
+          <span>ECONOMETRIC MODELING</span>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold">TabFM Zero-Shot</span>
+        </div>
+        <div class="font-display font-black text-6xl text-slate-900 mb-2">99.1%</div>
+        <p class="text-xs text-slate-500 font-medium">
+          Predictive accuracy on high-variance school attendance survey datasets.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- BENTO 2.0 FEATURE MATRIX SECTION -->
+  <section class="max-w-7xl mx-auto w-full mb-16">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <div>
+        <span class="text-xs font-mono-data text-sky-600 font-semibold uppercase tracking-wider block mb-1">SYSTEM CAPABILITIES</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900">Research & Analytics Architecture</h2>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button onclick="filterCards('all')" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-900 text-white shadow-sm">ALL</button>
+        <button onclick="filterCards('qual')" class="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">QUALITATIVE</button>
+        <button onclick="filterCards('quant')" class="px-4 py-2 text-xs font-semibold rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">QUANTITATIVE</button>
+      </div>
+    </div>
+
+    <!-- 3-CARD BENTO 2.0 GRID (AIRY VISUAL DENSITY: 4) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- BENTO ITEM 1 -->
+      <div class="bento-v1-card p-8 flex flex-col justify-between min-h-[320px]">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center font-display font-bold text-xl mb-6">
+            01
+          </div>
+          <h3 class="font-display font-bold text-2xl text-slate-900 mb-3">Field Notes to Structured Codebook</h3>
+          <p class="text-sm text-slate-600 leading-relaxed mb-6">
+            Automatically converting thousands of raw observer field notes into standardized thematic categories without manual human bias.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono-data text-slate-400">
+          <span>PIPELINE: QUAL_CODING</span>
+          <span class="text-slate-900 font-semibold">99.4% VERIFIED</span>
+        </div>
+      </div>
+
+      <!-- BENTO ITEM 2 -->
+      <div class="bento-v1-card p-8 flex flex-col justify-between min-h-[320px]">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-display font-bold text-xl mb-6">
+            02
+          </div>
+          <h3 class="font-display font-bold text-2xl text-slate-900 mb-3">TabFM Econometric Predictions</h3>
+          <p class="text-sm text-slate-600 leading-relaxed mb-6">
+            Leveraging tabular foundation models to forecast policy intervention impacts directly from sparse survey responses.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono-data text-slate-400">
+          <span>ENGINE: TABFM_ECON</span>
+          <span class="text-sky-600 font-semibold">ZERO-SHOT</span>
+        </div>
+      </div>
+
+      <!-- BENTO ITEM 3 -->
+      <div class="bento-v1-card p-8 flex flex-col justify-between min-h-[320px]">
+        <div>
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-display font-bold text-xl mb-6">
+            03
+          </div>
+          <h3 class="font-display font-bold text-2xl text-slate-900 mb-3">Streamlit Explorer Dashboard</h3>
+          <p class="text-sm text-slate-600 leading-relaxed mb-6">
+            Empowering non-technical stakeholders to slice qualitative sentiment against quantitative attendance metrics in real-time.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono-data text-slate-400">
+          <span>INTERFACE: STREAMLIT</span>
+          <span class="text-emerald-600 font-semibold">ACTIVE</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="max-w-7xl mx-auto w-full pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono-data gap-4">
+    <div>
+      <span>DESIGN TASTE FRONTEND V1</span>
+      <span class="mx-2">•</span>
+      <span>VARIANCE: 8 | MOTION: 6 | DENSITY: 4</span>
+    </div>
+    <div>
+      <span>ANTIGRAVITY HIGH-AGENCY ENGINE</span>
+    </div>
+  </footer>
+
+  <script>
+    // TYPEWRITER ANIMATION ENGINE FOR COMMAND INPUT
+    const prompts = [
+      "Run TabFM econometric regression on 4,800 survey records...",
+      "Zero-shot qualitative coding on classroom observer notes...",
+      "Verify DeepSeek-R1 chain-of-thought reasoning paths...",
+      "Export SPSS & R dataset frames to Streamlit dashboard..."
+    ];
+    let promptIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typewriterEl = document.getElementById("typewriter-text");
+
+    function typeEffect() {
+      const currentPrompt = prompts[promptIndex];
+      if (isDeleting) {
+        typewriterEl.textContent = currentPrompt.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typewriterEl.textContent = currentPrompt.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let speed = isDeleting ? 30 : 60;
+      if (!isDeleting && charIndex === currentPrompt.length) {
+        speed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        promptIndex = (promptIndex + 1) % prompts.length;
+        speed = 500;
+      }
+      setTimeout(typeEffect, speed);
+    }
+    typeEffect();
+
+    function triggerAnalysis() {
+      const statusEl = document.getElementById("island-status");
+      statusEl.textContent = "RUNNING PIPELINE...";
+      statusEl.className = "text-sky-400 font-semibold animate-pulse";
+      setTimeout(() => {
+        statusEl.textContent = "SYNTHESIS COMPLETE";
+        statusEl.className = "text-emerald-400 font-semibold";
+      }, 1800);
+    }
+
+    function filterCards(type) {
+      // Decorative interactive feedback for filtering
+      const statusEl = document.getElementById("island-status");
+      statusEl.textContent = `FILTER: ${type.toUpperCase()}`;
+    }
+  </script>
+</body>
+</html>

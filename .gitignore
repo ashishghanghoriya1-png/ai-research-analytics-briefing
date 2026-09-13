@@ -1,0 +1,4 @@
+*.log
+.agents/
+__pycache__/
+.vscode/

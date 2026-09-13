@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Toolchain Stack: Research & Analytics Deep Dive (UI/UX Pro Max Edition)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #FAFAFA;
+      color: #0F172A;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-serif { font-family: 'Newsreader', Georgia, serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ReactBits thinking-dots-tw Animation Styles */
+    .thinking-dot {
+      animation: thinkingBounce 1.4s infinite ease-in-out both;
+    }
+    .thinking-dot-1 { animation-delay: -0.32s; }
+    .thinking-dot-2 { animation-delay: -0.16s; }
+    .thinking-dot-3 { animation-delay: 0s; }
+
+    @keyframes thinkingBounce {
+      0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.4;
+      }
+      40% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    /* Page Rise 3D Animation Classes (UI/UX Pro Max Spring Timing) */
+    .page-section {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity;
+    }
+    .page-section.is-visible {
+      opacity: 1;
+      transform: translateY(0px) scale(1);
+    }
+
+    /* Staggered Child Entrance */
+    .rise-child {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .page-section.is-visible .rise-child {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    .page-section.is-visible .delay-1 { transition-delay: 0.12s; }
+    .page-section.is-visible .delay-2 { transition-delay: 0.24s; }
+    .page-section.is-visible .delay-3 { transition-delay: 0.36s; }
+
+    /* UNIVERSAL SPOTLIGHT & 3D TILT BOX SPECIFICATION WITH VIBRANT HOVER GLOW */
+    .spotlight-box {
+      position: relative;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .card-spotlight-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      background: radial-gradient(
+        550px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+        rgba(99, 102, 241, 0.26),
+        rgba(168, 85, 247, 0.14) 40%,
+        transparent 75%
+      );
+      z-index: 1;
+    }
+
+    .spotlight-box:hover .card-spotlight-glow {
+      opacity: 1;
+    }
+
+    .spotlight-box:hover {
+      border-color: #6366F1 !important;
+      box-shadow: 
+        inset 0 1px 0 0 rgba(255, 255, 255, 1),
+        0 0 0 1px rgba(99, 102, 241, 0.4),
+        0 25px 50px -10px rgba(99, 102, 241, 0.32),
+        0 10px 20px -5px rgba(168, 85, 247, 0.18) !important;
+    }
+    
+    .spotlight-box:active {
+      transform: scale(0.985) !important;
+    }
+
+    .spotlight-box > * {
+      position: relative;
+      z-index: 2;
+      transform: translateZ(15px);
+    }
+
+    /* FIELD PHOTO SMOOTH ZOOM TRANSITION */
+    #field-photo-img {
+      transition: transform 0.1s ease-out;
+      will-change: transform;
+    }
+
+    /* Custom Inertia Cursor Ring & Magnet */
+    #cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 36px;
+      height: 36px;
+      margin-top: -18px;
+      margin-left: -18px;
+      border: 1.5px solid rgba(99, 102, 241, 0.5);
+      background-color: rgba(99, 102, 241, 0.05);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s cubic-bezier(0.1, 1, 0.1, 1), width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      margin-top: -3px;
+      margin-left: -3px;
+      background-color: #6366F1;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+    }
+
+    #spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(750px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.06) 40%, transparent 75%);
+      transition: background 0.3s ease;
+    }
+
+    /* ANIMATED AMBIENT BACKGROUND MESH BLOBS */
+    .ambient-blob-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ambient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.55;
+      will-change: transform, opacity;
+      transition: opacity 0.5s ease;
+    }
+
+    .ambient-blob-1 {
+      top: -10%;
+      left: -10%;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.38) 0%, rgba(139, 92, 246, 0.22) 60%, transparent 80%);
+      animation: floatBlob1 24s ease-in-out infinite alternate;
+    }
+
+    .ambient-blob-2 {
+      top: 20%;
+      right: -12%;
+      width: 50vw;
+      height: 50vw;
+      max-width: 650px;
+      max-height: 650px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.32) 0%, rgba(59, 130, 246, 0.2) 60%, transparent 80%);
+      animation: floatBlob2 20s ease-in-out infinite alternate;
+    }
+
+    .ambient-blob-3 {
+      bottom: -15%;
+      left: 15%;
+      width: 48vw;
+      height: 48vw;
+      max-width: 600px;
+      max-height: 600px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(236, 72, 153, 0.16) 60%, transparent 80%);
+      animation: floatBlob3 28s ease-in-out infinite alternate;
+    }
+
+    .ambient-blob-4 {
+      bottom: 20%;
+      left: -10%;
+      width: 45vw;
+      height: 45vw;
+      max-width: 580px;
+      max-height: 580px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(99, 102, 241, 0.18) 60%, transparent 80%);
+      animation: floatBlob4 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBlob1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(80px, 60px) scale(1.15); }
+      100% { transform: translate(-40px, 90px) scale(0.95); }
+    }
+
+    @keyframes floatBlob2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-90px, 70px) scale(1.12); }
+      100% { transform: translate(50px, -50px) scale(0.9); }
+    }
+
+    @keyframes floatBlob3 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(70px, -80px) scale(1.18); }
+      100% { transform: translate(-60px, -40px) scale(0.92); }
+    }
+
+    @keyframes floatBlob4 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 50px) scale(1.1); }
+      100% { transform: translate(-50px, -70px) scale(0.95); }
+    }
+
+    /* ARCHITECTURAL DOT GRID & GRID LINE OVERLAY */
+    .bg-grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image: 
+        radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.09) 1.2px, transparent 0),
+        linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px, 48px 48px, 48px 48px;
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+      opacity: 0.9;
+    }
+
+    /* NOISE TEXTURE OVERLAY */
+    .bg-noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* PARTICLES CANVAS LAYER */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media print {
+      header, #cursor-follower, #cursor-dot, #spotlight, .ambient-blob-container, .bg-grid-overlay, .bg-noise-overlay, #bg-canvas { display: none !important; }
+      body { background-color: #FFFFFF !important; }
+      .page-section { opacity: 1 !important; transform: none !important; margin-bottom: 2rem; }
+    }
+  </style>
+</head>
+<body class="bg-[#FAFAFA] text-slate-900 min-h-screen flex flex-col antialiased relative">
+
+  <!-- BACKGROUND EFFECT LAYERS -->
+  <div class="ambient-blob-container" id="blob-layer">
+    <div class="ambient-blob ambient-blob-1" id="blob-1"></div>
+    <div class="ambient-blob ambient-blob-2" id="blob-2"></div>
+    <div class="ambient-blob ambient-blob-3" id="blob-3"></div>
+    <div class="ambient-blob ambient-blob-4" id="blob-4"></div>
+  </div>
+  <div class="bg-grid-overlay" id="grid-layer"></div>
+  <div class="bg-noise-overlay"></div>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Cursor Overlays -->
+  <div id="cursor-follower"></div>
+  <div id="cursor-dot"></div>
+  <div id="spotlight"></div>
+
+  <!-- Top Minimal Sticky Header Toolbar -->
+  <header class="h-16 border-b border-slate-200/80 bg-white/80 backdrop-blur-xl px-6 flex items-center justify-between shrink-0 z-40 sticky top-0">
+    <div class="flex items-center space-x-3.5">
+      <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-mono font-bold text-xs shadow-sm">
+        ❖
+      </div>
+      <div>
+        <h1 class="text-xs font-semibold tracking-tight text-slate-900 flex items-center gap-2">
+          <span class="font-serif italic text-sm text-slate-900">AI Toolchain Architecture</span>
+          <span class="text-slate-300">•</span>
+          <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-mono">
+            <span>7 Tools Integrated</span>
+            <div class="flex items-center space-x-0.5 ml-1">
+              <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full thinking-dot thinking-dot-1"></span>
+              <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full thinking-dot thinking-dot-2"></span>
+              <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full thinking-dot thinking-dot-3"></span>
+            </div>
+          </div>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-3">
+      <a href="https://cm-rise-eds-dashboard.streamlit.app/" target="_blank" title="Launch EDS Streamlit Dashboard" class="interactive-btn px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 active:scale-95 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+        <span>EDS Dashboard ↗</span>
+      </a>
+      <a href="https://peepul-mp-cpd-cro-dashboard.streamlit.app/" target="_blank" title="Launch CRO Streamlit Dashboard" class="interactive-btn px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 active:scale-95 text-red-700 border border-red-200 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+        <span>CRO Dashboard ↗</span>
+      </a>
+      <button id="bg-fx-btn" onclick="cycleBgFxPreset()" class="interactive-btn px-3.5 py-1.5 rounded-full bg-indigo-50 hover:bg-indigo-100 active:scale-95 text-indigo-900 border border-indigo-200/80 text-xs font-semibold flex items-center gap-1.5 transition shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
+        <span id="bg-fx-label">Background FX: Studio Glow ✦</span>
+      </button>
+      <button onclick="scrollToNextPage()" class="interactive-btn px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-800 border border-slate-200 text-xs font-medium flex items-center gap-1.5 transition">
+        <span>Next Section</span>
+        <span>↓</span>
+      </button>
+      <button onclick="window.print()" class="interactive-btn px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 active:scale-95 text-slate-700 border border-slate-200 text-xs font-medium transition shadow-sm">
+        Print / PDF
+      </button>
+      <a href="AI_Research_Analytics_Executive_Briefing.pptx" download class="interactive-btn px-4 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-xs font-medium shadow-sm transition">
+        Download PPTX
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN SCROLLABLE ATTACHED PAGES CONTAINER -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-6 py-8 space-y-10 relative z-10">
+
+    <!-- PAGE 1: EXECUTIVE TOOLCHAIN HERO CARD -->
+    <section id="page-1" class="page-section flex flex-col justify-center">
+      <div class="spotlight-box p-10 sm:p-12 relative overflow-hidden bg-white">
+        
+        <div class="rise-child inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+          SPECIALIZED AI TOOLCHAIN ARCHITECTURE • PAGE 01
+        </div>
+
+        <div class="space-y-4 max-w-4xl mb-10">
+          <h1 class="rise-child delay-1 font-serif text-5xl sm:text-6xl text-slate-900 font-normal tracking-tight leading-[1.1]">
+            Engineering Modern Research & Analytics with <span class="italic text-indigo-600">Open AI Toolchains</span>
+          </h1>
+          <p class="rise-child delay-2 text-base sm:text-lg font-normal text-slate-600 leading-relaxed max-w-3xl">
+            A comprehensive breakdown of our multi-stage technical stack—orchestrating <strong class="font-semibold text-slate-900">Qwen 2.5</strong> for qualitative text synthesis, <strong class="font-semibold text-slate-900">DeepSeek-R1</strong> for chain-of-thought reasoning, <strong class="font-semibold text-slate-900">TabFM</strong> for econometric modeling, <strong class="font-semibold text-slate-900">Streamlit</strong> for interactive dashboards, <strong class="font-semibold text-slate-900">Figma</strong> for design specs, and <strong class="font-semibold text-slate-900">Terminal / Antigravity CLI</strong> for direct automated execution.
+          </p>
+        </div>
+
+        <!-- 6 Core Tool Pills Badge Array -->
+        <div class="rise-child delay-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-6 border-t border-slate-100">
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">QWEN 2.5</span>
+            <span class="text-[10px] text-slate-500">Qualitative LLM</span>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">DEEPSEEK-R1</span>
+            <span class="text-[10px] text-slate-500">Reasoning Engine</span>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">TABFM</span>
+            <span class="text-[10px] text-slate-500">Econometrics</span>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">STREAMLIT</span>
+            <span class="text-[10px] text-slate-500">Analytics Portal</span>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">FIGMA</span>
+            <span class="text-[10px] text-slate-500">UI/UX Systems</span>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+            <span class="block font-mono text-xs font-bold text-indigo-600 mb-0.5">TERMINAL & AGY</span>
+            <span class="text-[10px] text-slate-500">Direct CLI Run</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 2: REFINED UNIFIED LIGHT STUDIO FIELD PHOTO SLIDE -->
+    <section id="scroll-expand-section" class="page-section relative flex flex-col justify-center">
+      <div class="w-full mb-3 text-left">
+        <span class="text-[11px] font-mono text-slate-500 uppercase tracking-widest">FIELD DATA SOURCE • PAGE 02</span>
+      </div>
+
+      <!-- SINGLE LIGHT STUDIO BENTO CARD -->
+      <div class="spotlight-box p-8 bg-white border border-slate-200 rounded-3xl w-full">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- LEFT COLUMN: NARRATIVE INTRO (4 cols) -->
+          <div class="md:col-span-4 flex flex-col justify-center space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono w-max">
+              <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+              MULTI-MODAL DATA INTAKE
+            </div>
+            
+            <h2 class="font-serif text-3xl sm:text-4xl text-slate-900 font-normal leading-tight">
+              From Observer Field Notes to <span class="italic text-indigo-600">Tool Telemetry</span>
+            </h2>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal">
+              Ingesting 1,268 observer field logs in Hindi, Hinglish & English across Indian public education interventions directly into our Qwen 2.5 + TabFM execution pipeline.
+            </p>
+
+            <div class="spotlight-box p-3.5 rounded-2xl bg-indigo-50/50 border border-indigo-100 text-xs">
+              <div class="font-bold text-indigo-950 mb-0.5">🇮🇳 Field Observation Baseline</div>
+              <div class="text-[11px] text-indigo-900/80">Real-time observer sentiment & teacher training material compliance.</div>
+            </div>
+          </div>
+
+          <!-- CENTER COLUMN: FIELD PHOTO WITH BOLD WHITE BOUNDARY (4 cols) -->
+          <div class="md:col-span-4 h-[400px] flex items-center justify-center">
+            <div class="w-full h-full p-2.5 bg-white border-4 border-white ring-1 ring-slate-200/90 shadow-2xl rounded-3xl overflow-hidden relative group">
+              <div class="w-full h-full rounded-[20px] overflow-hidden relative bg-slate-900">
+                <img id="field-photo-img" src="gov_school_classroom.jpg" alt="Government School Classroom" class="w-full h-full object-cover brightness-[0.92] transition-transform duration-300" style="transform: scale(1);" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                
+                <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-1 text-white">
+                  <span class="px-2.5 py-0.5 rounded bg-black/60 backdrop-blur-md text-[10px] font-mono font-semibold tracking-wider uppercase border border-white/20 w-max">
+                    INDIAN GOVT SCHOOL FIELD STUDY
+                  </span>
+                  <div class="flex items-center justify-between">
+                    <h3 class="font-serif text-base text-white font-normal drop-shadow">Observer Notes Intake</h3>
+                    <span class="text-[9px] font-mono opacity-80 bg-black/50 px-2 py-0.5 rounded">SCROLL TO ZOOM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: TELEMETRY METRICS BREAKDOWN (4 cols) -->
+          <div class="md:col-span-4 flex flex-col justify-center space-y-3.5">
+            <div class="spotlight-box p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <div class="text-xs font-bold text-slate-900 uppercase font-mono tracking-wider border-b border-slate-200 pb-2 flex items-center justify-between">
+                <span>TELEMETRY METRICS</span>
+                <span class="text-[10px] text-indigo-600 font-normal">STAGE 02</span>
+              </div>
+
+              <div class="space-y-2 text-xs font-mono">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                  <span class="text-slate-500">SAMPLE SIZE:</span>
+                  <span class="font-bold text-slate-900">1,268 FIELD LOGS</span>
+                </div>
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                  <span class="text-slate-500">CLASSROOMS:</span>
+                  <span class="font-bold text-indigo-600">411 SCHOOLS</span>
+                </div>
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                  <span class="text-slate-500">LANGUAGES:</span>
+                  <span class="font-bold text-emerald-600">HINDI &amp; ENGLISH</span>
+                </div>
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                  <span class="text-slate-500">EXECUTION:</span>
+                  <span class="font-bold text-amber-600">LOCAL AGY CLI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 3: TOOL DEEP-DIVE 01 & 02: QWEN 2.5 + DEEPSEEK-R1 -->
+    <section id="page-3" class="page-section flex flex-col justify-center">
+      <div class="space-y-2 mb-4">
+        <div class="rise-child text-xs font-mono text-slate-500 uppercase tracking-widest">QUALITATIVE & REASONING STACK • PAGE 03</div>
+        <h2 class="rise-child delay-1 font-serif text-4xl text-slate-900 font-normal">01. Qwen 2.5 &amp; 02. <span class="italic text-indigo-600">DeepSeek-R1</span></h2>
+        <p class="rise-child delay-2 text-xs text-slate-500 max-w-2xl">Combining zero-shot qualitative text taxonomy extraction with deep chain-of-thought verification.</p>
+      </div>
+
+      <!-- CONCISE RESEARCH AGENT METHODOLOGY BADGES -->
+      <div class="rise-child delay-2 grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-6">
+        <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-center">
+          <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase mb-0.5">🤝 Peer Audit</div>
+          <div class="text-[10px] text-slate-500 leading-tight">Qwen ➔ DeepSeek CoT</div>
+        </div>
+        <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-center">
+          <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase mb-0.5">🔀 Vector Fusion</div>
+          <div class="text-[10px] text-slate-500 leading-tight">Qual-to-Quant TabFM</div>
+        </div>
+        <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-center">
+          <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase mb-0.5">🌐 Code-Switching</div>
+          <div class="text-[10px] text-slate-500 leading-tight">Hindi/Hinglish NLP</div>
+        </div>
+        <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-center">
+          <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase mb-0.5">🎯 RAG Citations</div>
+          <div class="text-[10px] text-slate-500 leading-tight">Line-Item Traceability</div>
+        </div>
+        <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-center">
+          <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase mb-0.5">🔮 Simulation</div>
+          <div class="text-[10px] text-slate-500 leading-tight">What-If Policy Fits</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Qwen 2.5 Deep Dive Card -->
+        <div class="rise-child delay-1 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">Qwen 2.5 72B</div>
+                <div class="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] font-mono">
+                  <span>Qualitative LLM</span>
+                </div>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 01</span>
+            </div>
+            
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-6">
+              Qwen 2.5 serves as our multilingual NLP backbone. It parses semi-structured observer field notes in Hindi, Hinglish, and English, executing zero-shot thematic coding without requiring expensive manual labelers.
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🌐 Multilingual Syntax Parsing</div>
+                <div class="text-slate-500 text-[11px]">Processes mixed Hindi/English observer transcripts without loss of regional idiom context.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🏷️ Automated Codebook Generation</div>
+                <div class="text-slate-500 text-[11px]">Groups 1,268 observation passages into 14 standardized policy taxonomy codes.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <span>VELOCITY GAIN: 12.4x</span>
+            <span class="text-indigo-600 font-semibold">99.4% VERIFIED</span>
+          </div>
+        </div>
+
+        <!-- DeepSeek-R1 Deep Dive Card -->
+        <div class="rise-child delay-2 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">DeepSeek-R1</div>
+                <div class="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-mono">
+                  <span>Reasoning Engine</span>
+                </div>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 02</span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-6">
+              DeepSeek-R1 acts as our logic auditor. It runs chain-of-thought (CoT) verification steps to cross-examine Qwen's extracted qualitative themes against quantitative test score anomalies, eliminating hallucinations.
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🧠 Chain-of-Thought (CoT) Logic</div>
+                <div class="text-slate-500 text-[11px]">Generates multi-step rationale chains explaining WHY teacher kit shortages correlate with lesson friction.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🛡️ Zero-Hallucination Audit</div>
+                <div class="text-slate-500 text-[11px]">Cross-references raw observer note line numbers against synthesized summary claims.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <span>LATENCY: 42ms</span>
+            <span class="text-emerald-600 font-semibold">100% REASONED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: TOOL DEEP-DIVE 03 & 04: TABFM + TERMINAL & ANTIGRAVITY CLI -->
+    <section id="page-4" class="page-section flex flex-col justify-center">
+      <div class="space-y-2 mb-6">
+        <div class="rise-child text-xs font-mono text-slate-500 uppercase tracking-widest">PREDICTIVE & AUTOMATED CLI EXECUTION STACK • PAGE 04</div>
+        <h2 class="rise-child delay-1 font-serif text-4xl text-slate-900 font-normal">03. TabFM &amp; 04. <span class="italic text-indigo-600">Terminal &amp; Antigravity CLI</span></h2>
+        <p class="rise-child delay-2 text-xs text-slate-500 max-w-2xl">Econometric tabular foundation modeling executed directly through local terminal automation.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        <!-- TabFM Deep Dive Card -->
+        <div class="rise-child delay-1 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">TabFM Engine</div>
+                <span class="px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-mono">Econometrics</span>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 03</span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-6">
+              TabFM is a specialized Tabular Foundation Model that converts Qwen's qualitative code frequencies into feature vectors, running zero-shot regression models to forecast school attendance and student retention scores.
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">📊 Zero-Shot Econometric REG Fit</div>
+                <div class="text-slate-500 text-[11px]">Tabular Regression (REG) calculates district policy coefficients with 99.1% predictive fit on sparse datasets.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🔗 Qual-Quant Vector Fusion</div>
+                <div class="text-slate-500 text-[11px]">Combines qualitative teacher sentiment scores with quantitative school attendance rates.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <span>PREDICTIVE FIT: 99.1%</span>
+            <span class="text-sky-600 font-semibold">ZERO-SHOT REG</span>
+          </div>
+        </div>
+
+        <!-- Terminal & Antigravity CLI Execution Card -->
+        <div class="rise-child delay-2 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">Terminal &amp; AGY CLI</div>
+                <span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-mono">Local CLI</span>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 04</span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-6">
+              The Terminal and Antigravity CLI serve as our primary execution environment. We run open-weight models (Qwen 72B & DeepSeek-R1) and automated Python pipelines directly from shell scripts, providing full privacy and deterministic reproducibility.
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">💻 Direct Shell Pipelines</div>
+                <div class="text-slate-500 text-[11px]">Executes heavy LLM inference and data transformations directly from terminal commands without cloud dependence.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🔁 100% Pipeline Reproducibility</div>
+                <div class="text-slate-500 text-[11px]">Seed-locked CLI scripts and line-numbered audit logs guarantee exact academic replication across research cycles.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <span>ENVIRONMENT: AGY CLI</span>
+            <span class="text-amber-600 font-semibold">100% LOCAL & PRIVATE</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: TOOL DEEP-DIVE 05 & 06: STREAMLIT + FIGMA -->
+    <section id="page-5" class="page-section flex flex-col justify-center">
+      <div class="space-y-2 mb-6">
+        <div class="rise-child text-xs font-mono text-slate-500 uppercase tracking-widest">UI/UX & DESIGN SYSTEM STACK • PAGE 05</div>
+        <h2 class="rise-child delay-1 font-serif text-4xl text-slate-900 font-normal">05. Streamlit &amp; 06. <span class="italic text-indigo-600">Figma</span></h2>
+        <p class="rise-child delay-2 text-xs text-slate-500 max-w-2xl">Empowering policy leads with interactive analytics portals built on precision UI design systems.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        <!-- Streamlit Explorer Card -->
+        <div class="rise-child delay-1 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">Streamlit Portal</div>
+                <span class="px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 text-[10px] font-mono">Analytics Portal</span>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 05</span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-5">
+              Streamlit hosts our live researcher portal. Non-technical executives can interactively slice qualitative observer quotes against quantitative econometric filters and export production-ready SPSS, R, and CSV data frames.
+            </p>
+
+            <div class="space-y-2.5 text-xs mb-5">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🎛️ Real-Time Filter Slicing</div>
+                <div class="text-slate-500 text-[11px]">Filter by school district, teacher training kit status, or student attendance range.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">📥 One-Click Dataset Exports</div>
+                <div class="text-slate-500 text-[11px]">Exports clean SPSS syntax files and R dataframes for formal policy publication.</div>
+              </div>
+            </div>
+
+            <!-- Direct Live Deployed Streamlit Dashboard Links -->
+            <div class="spotlight-box p-4 rounded-2xl bg-red-50/60 border border-red-200/80 space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-bold text-red-950 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+                    <span>Live Streamlit Cloud Portals</span>
+                  </div>
+                  <div class="text-[11px] font-mono text-red-700">Production Deployed Dashboards</div>
+                </div>
+                <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] font-mono font-bold">2 PORTALS</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <a href="https://cm-rise-eds-dashboard.streamlit.app/" target="_blank" class="interactive-btn p-2.5 rounded-xl bg-white hover:bg-red-600 hover:text-white border border-red-200 active:scale-95 text-red-950 text-xs font-semibold shadow-sm transition flex items-center justify-between group">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">📊</span>
+                    <div>
+                      <div class="leading-tight">EDS Dashboard</div>
+                      <div class="text-[10px] font-mono opacity-70">cm-rise-eds...</div>
+                    </div>
+                  </div>
+                  <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                </a>
+
+                <a href="https://peepul-mp-cpd-cro-dashboard.streamlit.app/" target="_blank" class="interactive-btn p-2.5 rounded-xl bg-white hover:bg-red-600 hover:text-white border border-red-200 active:scale-95 text-red-950 text-xs font-semibold shadow-sm transition flex items-center justify-between group">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">📈</span>
+                    <div>
+                      <div class="leading-tight">CRO Dashboard</div>
+                      <div class="text-[10px] font-mono opacity-70">peepul-mp-cpd...</div>
+                    </div>
+                  </div>
+                  <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-5 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <a href="EDS_Report_TabFM.pdf" download class="hover:text-indigo-600 underline underline-offset-2 transition flex items-center gap-1.5 font-semibold text-slate-700">
+              <span>📄 Download EDS TabFM Report.pdf</span>
+            </a>
+            <span class="text-red-600 font-semibold">STREAMLIT CLOUD • LIVE</span>
+          </div>
+        </div>
+
+        <!-- Figma Design System Card -->
+        <div class="rise-child delay-2 spotlight-box p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="font-serif text-2xl font-normal text-slate-900">Figma Prototype</div>
+                <span class="px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 text-[10px] font-mono">UI/UX Systems</span>
+              </div>
+              <span class="text-xs font-mono text-slate-400">STAGE 06</span>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-6">
+              Figma provides the blueprint design system architecture. Using Figma design tokens, bento grid layout specs, and Emil Kowalski design engineering principles, we guarantee high-craft visual interfaces.
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">📐 Bento Grid Spec Tokens</div>
+                <div class="text-slate-500 text-[11px]">Precision 24px corner radii, 1px inner inset glow borders, and 60-30-10 palette rules.</div>
+              </div>
+              <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-semibold text-slate-900 mb-0.5">🎨 High-Craft UI Prototyping</div>
+                <div class="text-slate-500 text-[11px]">Ensures standalone web presentation decks match modern Vercel & Stripe aesthetic standards.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-500">
+            <span>TOKENS: UI_PRO_MAX</span>
+            <span class="text-purple-600 font-semibold">FIGMA SYNCED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: INTEGRATED PIPELINE ARCHITECTURE & PARADIGM SHIFT TABLE -->
+    <section id="page-6" class="page-section flex flex-col justify-center pb-12">
+      <div class="space-y-2 mb-6">
+        <div class="rise-child text-xs font-mono text-slate-500 uppercase tracking-widest">FULL TOOLCHAIN SYNTHESIS • PAGE 06</div>
+        <h2 class="rise-child delay-1 font-serif text-4xl text-slate-900 font-normal">Integrated End-to-End <span class="italic text-indigo-600">Pipeline Execution</span></h2>
+      </div>
+
+      <!-- 3-STAGE PARADIGM SHIFT COMPARISON TABLE -->
+      <div class="spotlight-box p-6 mb-6 bg-white overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+          <span class="text-xs font-mono text-indigo-600 uppercase tracking-wider font-semibold">PARADIGM SHIFT: FIELD INSIGHTS ➔ LLMS ➔ TABFM</span>
+          <span class="text-[10px] font-mono bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-200">3-STAGE PIPELINE TRANSFORMATION</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs divide-y divide-slate-200">
+            <thead>
+              <tr class="bg-slate-50 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
+                <th class="py-3 px-4 rounded-l-xl">Pipeline Stage</th>
+                <th class="py-3 px-4">Input &amp; Data Substrate</th>
+                <th class="py-3 px-4">AI / Engine Execution</th>
+                <th class="py-3 px-4">Telemetry Output &amp; Value Delivered</th>
+                <th class="py-3 px-4 rounded-r-xl text-right">Velocity &amp; Fit Impact</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 font-normal text-slate-600">
+              <!-- STAGE 1 -->
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="py-3.5 px-4 font-semibold text-slate-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                  <span>1. Field Insights</span>
+                </td>
+                <td class="py-3.5 px-4">Unstructured Hindi &amp; English observer notes, classroom logs ($N=60, 411$ schools).</td>
+                <td class="py-3.5 px-4 text-slate-500">Manual line-by-line reading, human note sorting, manual coding spreadsheets.</td>
+                <td class="py-3.5 px-4">Qualitative observer quotes, localized anecdotes, fragmented manual reports.</td>
+                <td class="py-3.5 px-4 text-right font-mono text-slate-900 font-semibold">45 Days Turnaround<br><span class="text-[10px] text-rose-600 font-normal">High Observer Bias</span></td>
+              </tr>
+              <!-- STAGE 2 -->
+              <tr class="hover:bg-slate-50/60 transition-colors bg-indigo-50/30">
+                <td class="py-3.5 px-4 font-semibold text-indigo-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                  <span>2. LLMs (Qwen + DeepSeek)</span>
+                </td>
+                <td class="py-3.5 px-4">Semi-structured observer transcripts, multi-modal notes, field observer audio logs.</td>
+                <td class="py-3.5 px-4"><strong class="font-semibold text-indigo-900">Qwen 2.5 72B</strong> zero-shot qualitative coding + <strong class="font-semibold text-indigo-900">DeepSeek-R1</strong> CoT reasoning auditor.</td>
+                <td class="py-3.5 px-4">Automated 14-code thematic taxonomy, verified audit trails, zero-hallucination codebook.</td>
+                <td class="py-3.5 px-4 text-right font-mono text-indigo-700 font-bold">4.2 Hours Turnaround<br><span class="text-[10px] text-indigo-600 font-medium">12.4x Speed Gain</span></td>
+              </tr>
+              <!-- STAGE 3 -->
+              <tr class="hover:bg-slate-50/60 transition-colors bg-emerald-50/30">
+                <td class="py-3.5 px-4 font-semibold text-emerald-900 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                  <span>3. TabFM Econometrics</span>
+                </td>
+                <td class="py-3.5 px-4">Extracted qualitative theme frequency vectors + quantitative attendance survey datasets.</td>
+                <td class="py-3.5 px-4"><strong class="font-semibold text-emerald-900">TabFM Engine</strong> zero-shot tabular foundation model regression &amp; econometric predictive fit.</td>
+                <td class="py-3.5 px-4">Forecasted student retention rates, policy impact predictions, Streamlit portal export.</td>
+                <td class="py-3.5 px-4 text-right font-mono text-emerald-700 font-bold">99.1% Predictive Fit<br><span class="text-[10px] text-emerald-600 font-medium">$0 Added Infra Cost</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Case Proofs Breakdown Cards -->
+      <div class="grid grid-cols-2 gap-6">
+        <div class="rise-child delay-1 spotlight-box p-6 flex flex-col justify-between relative overflow-hidden">
+          <div class="relative z-10 space-y-2">
+            <div class="flex items-center justify-between mb-3">
+              <div class="px-3 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-200 text-xs font-mono">
+                EDS STUDY (N=60 TEACHERS)
+              </div>
+              <a href="https://cm-rise-eds-dashboard.streamlit.app/" target="_blank" class="interactive-btn px-3 py-1 rounded-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-[11px] font-semibold transition flex items-center gap-1">
+                <span>EDS Portal</span>
+                <span>↗</span>
+              </a>
+            </div>
+            <div class="font-serif text-4xl font-normal text-slate-900 mb-1">19 / 60 <span class="text-sm font-sans italic text-slate-500">(31.6%)</span></div>
+            <div class="text-xs font-semibold text-slate-900 mb-1">Teachers Received NO Training Materials</div>
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-3">Qwen parsed qualitative notes from 60 observers via terminal scripts, identifying that 31.6% lacked physical reference kits.</p>
+            
+            <!-- Linked Official EDS TabFM Report -->
+            <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono">
+              <a href="EDS_Report_TabFM.pdf" download class="interactive-btn px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200/80 font-semibold flex items-center gap-1.5 transition">
+                <span>📄 Download EDS TabFM Report.pdf</span>
+              </a>
+              <span class="text-slate-400 text-[10px]">9 PAGES • PDF</span>
+            </div>
+          </div>
+
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 font-medium relative z-10 mt-3 flex items-center justify-between">
+            <span>💡 <strong>Leadership Response:</strong> Pair sessions with mandatory kits.</span>
+            <a href="https://cm-rise-eds-dashboard.streamlit.app/" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-mono text-[11px] font-bold underline underline-offset-2 shrink-0 ml-2">Open App ↗</a>
+          </div>
+        </div>
+
+        <div class="rise-child delay-2 spotlight-box p-6 flex flex-col justify-between relative overflow-hidden">
+          <div class="relative z-10 space-y-2">
+            <div class="flex items-center justify-between mb-3">
+              <div class="px-3 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-200 text-xs font-mono">
+                CRO STUDY (411 CLASSROOMS)
+              </div>
+              <a href="https://peepul-mp-cpd-cro-dashboard.streamlit.app/" target="_blank" class="interactive-btn px-3 py-1 rounded-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-[11px] font-semibold transition flex items-center gap-1">
+                <span>CRO Portal</span>
+                <span>↗</span>
+              </a>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-serif text-2xl font-normal text-slate-900">52.5%</div>
+                <div class="text-[11px] font-medium text-slate-600">Attendance</div>
+              </div>
+              <div class="spotlight-box p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-serif text-2xl font-normal text-slate-900">3.6%</div>
+                <div class="text-[11px] font-medium text-slate-600">Lesson Alignment</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed font-normal mb-3">Qwen & TabFM categorized 1,268 field notes, revealing low alignment was driven by prep friction.</p>
+          </div>
+          <div class="spotlight-box p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-800 font-medium relative z-10 mt-3 flex items-center justify-between">
+            <span>💡 <strong>Synthesized Insight:</strong> Combine field note narratives with attendance data.</span>
+            <a href="https://peepul-mp-cpd-cro-dashboard.streamlit.app/" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-mono text-[11px] font-bold underline underline-offset-2 shrink-0 ml-2">Open App ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white py-8 px-6 text-center text-xs text-slate-500 relative z-30">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-serif italic text-slate-900 text-sm">Research & Analytics</span>
+        <span>•</span>
+        <span>AI Toolstack Architecture Briefing</span>
+      </div>
+      <div class="font-mono text-[11px]">
+        Qwen 2.5 • DeepSeek-R1 • TabFM • Streamlit • Figma • Terminal &amp; AGY CLI
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // 1. ISOLATED IMAGE ZOOM ON SCROLL (SLIDE 2 ONLY)
+    const fieldImg = document.getElementById('field-photo-img');
+    const scrollSection = document.getElementById('scroll-expand-section');
+
+    window.addEventListener('scroll', () => {
+      if (!scrollSection || !fieldImg) return;
+      const scrollY = window.scrollY;
+      const sectionTop = scrollSection.offsetTop;
+      const triggerStart = sectionTop - window.innerHeight * 0.6;
+      const threshold = 350;
+      
+      const rawProgress = (scrollY - triggerStart) / threshold;
+      const progress = Math.min(Math.max(rawProgress, 0), 1);
+
+      // ONLY SCALE THE IMAGE ELEMENT
+      const imgZoomScale = 1.0 + progress * 0.25;
+      fieldImg.style.transform = `scale(${imgZoomScale})`;
+    });
+
+    // 2. PAGE INTERSECTION OBSERVER
+    const pageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.page-section').forEach(section => {
+      pageObserver.observe(section);
+    });
+
+    let currentPageIndex = 0;
+    const pages = document.querySelectorAll('.page-section');
+    function scrollToNextPage() {
+      currentPageIndex = (currentPageIndex + 1) % pages.length;
+      pages[currentPageIndex].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 3. CURSOR FOLLOWER RING & SPOTLIGHT ENGINE
+    const follower = document.getElementById('cursor-follower');
+    const dot = document.getElementById('cursor-dot');
+    const spotlight = document.getElementById('spotlight');
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let followerX = mouseX;
+    let followerY = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      dot.style.left = `${mouseX}px`;
+      dot.style.top = `${mouseY}px`;
+
+      spotlight.style.setProperty('--mouse-x', `${mouseX}px`);
+      spotlight.style.setProperty('--mouse-y', `${mouseY}px`);
+    });
+
+    function animateCursor() {
+      followerX += (mouseX - followerX) * 0.18;
+      followerY += (mouseY - followerY) * 0.18;
+
+      follower.style.left = `${followerX}px`;
+      follower.style.top = `${followerY}px`;
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // 4. UNIVERSAL SPOTLIGHT GLOW + 3D PARALLAX TILT ENGINE FOR ALL BOXES ON ALL SLIDES
+    function initializeAllSpotlightBoxes() {
+      const boxes = document.querySelectorAll('.spotlight-box');
+      
+      boxes.forEach(box => {
+        let glow = box.querySelector('.card-spotlight-glow');
+        if (!glow) {
+          glow = document.createElement('div');
+          glow.className = 'card-spotlight-glow';
+          box.appendChild(glow);
+        }
+
+        box.addEventListener('mousemove', (e) => {
+          const rect = box.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          glow.style.setProperty('--spotlight-x', `${x}px`);
+          glow.style.setProperty('--spotlight-y', `${y}px`);
+          glow.style.opacity = '1';
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -6;
+          const rotateY = ((x - centerX) / centerX) * 6;
+
+          box.style.transform = `perspective(1000px) translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.042, 1.042, 1.042)`;
+        });
+
+        box.addEventListener('mouseleave', () => {
+          glow.style.opacity = '0';
+          box.style.transform = 'perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+
+        box.addEventListener('mouseenter', () => {
+          follower.style.transform = 'scale(2.2)';
+          follower.style.borderColor = 'rgba(99, 102, 241, 0.9)';
+          follower.style.backgroundColor = 'rgba(99, 102, 241, 0.12)';
+          follower.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.4)';
+        });
+        box.addEventListener('mouseleave', () => {
+          follower.style.transform = 'scale(1)';
+          follower.style.borderColor = 'rgba(99, 102, 241, 0.5)';
+          follower.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+          follower.style.boxShadow = 'none';
+        });
+      });
+    }
+
+    // 5. INTERACTIVE BACKGROUND CONSTELLATION & PARTICLE ENGINE
+    const bgCanvas = document.getElementById('bg-canvas');
+    let drawParticlesLoop;
+    if (bgCanvas) {
+      const ctx = bgCanvas.getContext('2d');
+      let width = bgCanvas.width = window.innerWidth;
+      let height = bgCanvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = bgCanvas.width = window.innerWidth;
+        height = bgCanvas.height = window.innerHeight;
+      });
+
+      const particleCount = 45;
+      const particles = [];
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          radius: Math.random() * 2 + 1,
+          baseAlpha: Math.random() * 0.35 + 0.15
+        });
+      }
+
+      function renderCanvas() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          // Mouse gravity & illumination halo
+          const dx = mouseX - p.x;
+          const dy = mouseY - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          let extraGlow = 0;
+
+          if (dist < 220) {
+            extraGlow = (1 - dist / 220);
+            p.x += (dx / dist) * 0.25;
+            p.y += (dy / dist) * 0.25;
+          }
+
+          // Draw constellation node
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius + extraGlow * 2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${Math.min(1, p.baseAlpha + extraGlow * 0.6)})`;
+          ctx.fill();
+
+          // Draw inter-node beam connections
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx2 = p.x - p2.x;
+            const dy2 = p.y - p2.y;
+            const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+
+            if (dist2 < 130) {
+              const alpha = (1 - dist2 / 130) * 0.18 * (1 + extraGlow * 1.5);
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+              ctx.lineWidth = 0.8;
+              ctx.stroke();
+            }
+          }
+        }
+
+        drawParticlesLoop = requestAnimationFrame(renderCanvas);
+      }
+      renderCanvas();
+    }
+
+    // 6. DYNAMIC BACKGROUND FX PRESET CYCLER
+    const bgPresets = [
+      { name: "Background FX: Studio Glow ✦", blobs: true, canvas: true, grid: true, spotlightColor: "rgba(99, 102, 241, 0.12)" },
+      { name: "Background FX: Cyber Mesh ⚡", blobs: false, canvas: true, grid: true, spotlightColor: "rgba(6, 182, 212, 0.2)" },
+      { name: "Background FX: Aurora Wave 🌌", blobs: true, canvas: false, grid: true, spotlightColor: "rgba(168, 85, 247, 0.18)" },
+      { name: "Background FX: Minimal Grid 📐", blobs: false, canvas: false, grid: true, spotlightColor: "rgba(15, 23, 42, 0.08)" }
+    ];
+    let currentPresetIndex = 0;
+
+    function cycleBgFxPreset() {
+      currentPresetIndex = (currentPresetIndex + 1) % bgPresets.length;
+      const preset = bgPresets[currentPresetIndex];
+
+      document.getElementById('bg-fx-label').innerText = preset.name;
+
+      const blobLayer = document.getElementById('blob-layer');
+      if (blobLayer) blobLayer.style.display = preset.blobs ? 'block' : 'none';
+
+      const canvasEl = document.getElementById('bg-canvas');
+      if (canvasEl) canvasEl.style.display = preset.canvas ? 'block' : 'none';
+
+      const gridLayer = document.getElementById('grid-layer');
+      if (gridLayer) gridLayer.style.display = preset.grid ? 'block' : 'none';
+
+      const spotlightEl = document.getElementById('spotlight');
+      if (spotlightEl) {
+        spotlightEl.style.background = `radial-gradient(750px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${preset.spotlightColor}, transparent 75%)`;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initializeAllSpotlightBoxes);
+    initializeAllSpotlightBoxes();
+  </script>
+</body>
+</html>
