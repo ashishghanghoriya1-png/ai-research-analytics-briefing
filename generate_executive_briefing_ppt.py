@@ -642,6 +642,53 @@ def create_deck():
         p_d.font.size = Pt(11)
         p_d.font.color.rgb = TEXT_MUTED
 
+    # =========================================================================
+    # SLIDE 11: Program Leadership & Team Credits
+    # =========================================================================
+    s11 = prs.slides.add_slide(blank_layout)
+    set_slide_background(s11)
+    add_header(s11, "Team Credits & Governance", "Program Leadership & Architectural Credits", "Recognizing the vision, leadership, and technical execution behind the AI stack.")
+
+    credits_cards = [
+        ("Concept & Program Context", "Shilish & Shil", "Shilish presented the original concept and program-level code design. Shil helped establish and shape the program context and analytical framework.", ACCENT_AMBER),
+        ("Guidance & Leadership", "Rohan", "Provided continuous strategic guidance, leadership, and project oversight throughout the program lifecycle.", ACCENT_INDIGO),
+        ("Lead Development & Execution", "Ashish", "Lead developer responsible for full-stack implementation, model integration, interactive dashboard development, and deployment.", ACCENT_EMERALD)
+    ]
+
+    card_w = Inches(3.64)
+    gap = Inches(0.4)
+    start_x = Inches(0.8)
+    card_top = Inches(2.0)
+    card_h = Inches(4.8)
+
+    for i, (role, name, desc, color) in enumerate(credits_cards):
+        x = start_x + i * (card_w + gap)
+        add_card(s11, x, card_top, card_w, card_h, border_color=BORDER_CARD)
+
+        tb = s11.shapes.add_textbox(x + Inches(0.3), card_top + Inches(0.4), card_w - Inches(0.6), card_h - Inches(0.8))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        p = tf.paragraphs[0]
+        p.text = role.upper()
+        p.font.name = FONT_BODY
+        p.font.size = Pt(11)
+        p.font.bold = True
+        p.font.color.rgb = color
+
+        p_t = tf.add_paragraph()
+        p_t.text = name
+        p_t.font.name = FONT_HEADING
+        p_t.font.size = Pt(22)
+        p_t.font.bold = True
+        p_t.font.color.rgb = TEXT_MAIN
+
+        p_d = tf.add_paragraph()
+        p_d.text = "\n" + desc
+        p_d.font.name = FONT_BODY
+        p_d.font.size = Pt(12)
+        p_d.font.color.rgb = TEXT_MUTED
+
     output_path = "AI_Research_Analytics_Executive_Briefing.pptx"
     prs.save(output_path)
     print(f"Presentation saved successfully in Strategic Research Briefing style: {os.path.abspath(output_path)}")

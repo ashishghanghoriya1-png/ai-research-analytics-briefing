@@ -381,6 +381,35 @@ def generate_speaker_notes():
             if c_idx == 0:
                 r.font.bold = True
 
+    # =========================================================================
+    # PROGRAM LEADERSHIP & TEAM CREDITS
+    # =========================================================================
+    doc.add_heading("Program Leadership & Team Credits", level=1)
+    
+    add_callout_box(
+        doc,
+        "Architectural Ideation & Program Context: Shilish & Shil",
+        "Shilish presented the original concept and program-level code design that laid the groundwork for this AI stack. Shil helped establish and shape the program context and overall analytical framework.",
+        border_color="D97706",
+        bg_color="FFFBEB"
+    )
+    
+    add_callout_box(
+        doc,
+        "Strategic Guidance & Program Oversight: Rohan",
+        "Rohan provided continuous executive leadership, strategic direction, and project guidance throughout the entire initiative.",
+        border_color="2563EB",
+        bg_color="EFF6FF"
+    )
+    
+    add_callout_box(
+        doc,
+        "Development & Lead Engineering: Ashish",
+        "Ashish served as the lead developer and engineer, responsible for end-to-end implementation, model orchestration, interactive dashboard development, and cloud deployment.",
+        border_color="4F46E5",
+        bg_color="EEF2FF"
+    )
+
     out_file = "AI_Research_Analytics_Executive_Speaker_Notes.docx"
     doc.save(out_file)
     print(f"Executive Speaker Notes saved successfully: {os.path.abspath(out_file)}")
