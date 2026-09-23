@@ -8,15 +8,24 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: #FAFAFA;
       color: #0F172A;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     }
-    .font-serif { font-family: 'Newsreader', Georgia, serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .font-serif { font-family: 'Newsreader', Georgia, serif; text-rendering: optimizeLegibility; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; text-rendering: optimizeLegibility; }
 
     /* ReactBits thinking-dots-tw Animation Styles */
     .thinking-dot {
@@ -37,33 +46,32 @@
       }
     }
 
-    /* Page Rise 3D Animation Classes (UI/UX Pro Max Spring Timing) */
+    /* Page Rise Animation Classes (UI/UX Pro Max Spring Timing) */
     .page-section {
       opacity: 0;
-      transform: translateY(40px) scale(0.97);
-      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform, opacity;
+      transform: translateY(30px);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .page-section.is-visible {
       opacity: 1;
-      transform: translateY(0px) scale(1);
+      transform: none;
     }
 
     /* Staggered Child Entrance */
     .rise-child {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .page-section.is-visible .rise-child {
       opacity: 1;
-      transform: translateY(0px);
+      transform: none;
     }
-    .page-section.is-visible .delay-1 { transition-delay: 0.12s; }
-    .page-section.is-visible .delay-2 { transition-delay: 0.24s; }
-    .page-section.is-visible .delay-3 { transition-delay: 0.36s; }
+    .page-section.is-visible .delay-1 { transition-delay: 0.1s; }
+    .page-section.is-visible .delay-2 { transition-delay: 0.2s; }
+    .page-section.is-visible .delay-3 { transition-delay: 0.3s; }
 
-    /* UNIVERSAL SPOTLIGHT & 3D TILT BOX SPECIFICATION WITH VIBRANT HOVER GLOW */
+    /* UNIVERSAL SPOTLIGHT & BUBBLY ZOOM BOX SPECIFICATION WITH VIBRANT HOVER GLOW */
     .spotlight-box {
       position: relative;
       background: #FFFFFF;
@@ -71,10 +79,9 @@
       box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 10px 30px -4px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
       border-radius: 24px;
       overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-      will-change: transform;
-      transform-style: preserve-3d;
-      perspective: 1000px;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     .card-spotlight-glow {
@@ -113,7 +120,6 @@
     .spotlight-box > * {
       position: relative;
       z-index: 2;
-      transform: translateZ(15px);
     }
 
     /* FIELD PHOTO SMOOTH ZOOM TRANSITION */
@@ -1173,17 +1179,12 @@
           glow.style.setProperty('--spotlight-y', `${y}px`);
           glow.style.opacity = '1';
 
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -6;
-          const rotateY = ((x - centerX) / centerX) * 6;
-
-          box.style.transform = `perspective(1000px) translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.042, 1.042, 1.042)`;
+          box.style.transform = 'translateY(-5px) scale(1.022)';
         });
 
         box.addEventListener('mouseleave', () => {
           glow.style.opacity = '0';
-          box.style.transform = 'perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          box.style.transform = 'none';
         });
 
         box.addEventListener('mouseenter', () => {
