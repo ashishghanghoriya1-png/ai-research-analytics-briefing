@@ -341,7 +341,7 @@ def generate_speaker_notes():
     # =========================================================================
     doc.add_heading("Appendix: Live System Resources & Report Files", level=1)
     
-    app_table = doc.add_table(rows=4, cols=3)
+    app_table = doc.add_table(rows=6, cols=3)
     app_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     app_table.autofit = False
     
@@ -363,6 +363,8 @@ def generate_speaker_notes():
     resources = [
         ("EDS Streamlit Dashboard", "https://cm-rise-eds-dashboard.streamlit.app/", "Live Cloud Portal"),
         ("CRO Streamlit Dashboard", "https://peepul-mp-cpd-cro-dashboard.streamlit.app/", "Live Cloud Portal"),
+        ("Lifted Analytics Dashboard", "https://ashishghanghoriya1-png.github.io/lifted-analytics-dashboard/", "Live GitHub Web App"),
+        ("MP Shaikshik Samwaad", "https://ashishghanghoriya1-png.github.io/MP-Shaikshik-Samwaad/", "Live GitHub Web App"),
         ("Official TabFM Report PDF", "EDS_Report_TabFM.pdf (9 Pages)", "Local PDF Report")
     ]
 
@@ -388,8 +390,8 @@ def generate_speaker_notes():
     
     add_callout_box(
         doc,
-        "Architectural Ideation & Program Context: Shilish & Shil",
-        "Shilish presented the original concept and program-level code design that laid the groundwork for this AI stack. Shil helped establish and shape the program context and overall analytical framework.",
+        "Architectural Ideation & Program Context: Shirish & Shil",
+        "Shirish presented the original concept and program-level code design that laid the groundwork for this AI stack. Shil helped establish and shape the program context and overall analytical framework.",
         border_color="D97706",
         bg_color="FFFBEB"
     )

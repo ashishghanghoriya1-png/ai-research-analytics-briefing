@@ -650,7 +650,7 @@ def create_deck():
     add_header(s11, "Team Credits & Governance", "Program Leadership & Architectural Credits", "Recognizing the vision, leadership, and technical execution behind the AI stack.")
 
     credits_cards = [
-        ("Concept & Program Context", "Shilish & Shil", "Shilish presented the original concept and program-level code design. Shil helped establish and shape the program context and analytical framework.", ACCENT_AMBER),
+        ("Concept & Program Context", "Shirish & Shil", "Shirish presented the original concept and program-level code design. Shil helped establish and shape the program context and analytical framework.", ACCENT_AMBER),
         ("Guidance & Leadership", "Rohan", "Provided continuous strategic guidance, leadership, and project oversight throughout the program lifecycle.", ACCENT_INDIGO),
         ("Lead Development & Execution", "Ashish", "Lead developer responsible for full-stack implementation, model integration, interactive dashboard development, and deployment.", ACCENT_EMERALD)
     ]
@@ -687,6 +687,54 @@ def create_deck():
         p_d.text = "\n" + desc
         p_d.font.name = FONT_BODY
         p_d.font.size = Pt(12)
+        p_d.font.color.rgb = TEXT_MUTED
+
+    # =========================================================================
+    # SLIDE 12: Integrated Live Analytics Dashboards (4 Portals)
+    # =========================================================================
+    s12 = prs.slides.add_slide(blank_layout)
+    set_slide_background(s12)
+    add_header(s12, "Live Dashboards & Portals", "Integrated Ecosystem of 4 Live Analytics Portals", "Direct cloud & web access to operational dashboards and research telemetry.")
+
+    dash_cards = [
+        ("EDS Streamlit Dashboard", "https://cm-rise-eds-dashboard.streamlit.app/", "Teacher training material availability & field observation telemetry.", ACCENT_ROSE),
+        ("CRO Streamlit Dashboard", "https://peepul-mp-cpd-cro-dashboard.streamlit.app/", "Classroom observation & attendance alignment analytics across 411 schools.", ACCENT_PURPLE),
+        ("Lifted Analytics Dashboard", "https://ashishghanghoriya1-png.github.io/lifted-analytics-dashboard/", "Intervention fidelity & multi-district telemetry infrastructure.", ACCENT_INDIGO),
+        ("MP Shaikshik Samwaad", "https://ashishghanghoriya1-png.github.io/MP-Shaikshik-Samwaad/", "Academic dialogue metrics & teacher engagement analytics across Madhya Pradesh.", ACCENT_EMERALD)
+    ]
+
+    card_w = Inches(2.75)
+    gap = Inches(0.24)
+    start_x = Inches(0.8)
+    card_top = Inches(2.0)
+    card_h = Inches(4.8)
+
+    for i, (title, url, desc, color) in enumerate(dash_cards):
+        x = start_x + i * (card_w + gap)
+        add_card(s12, x, card_top, card_w, card_h, border_color=BORDER_CARD)
+
+        tb = s12.shapes.add_textbox(x + Inches(0.2), card_top + Inches(0.3), card_w - Inches(0.4), card_h - Inches(0.6))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        p = tf.paragraphs[0]
+        p.text = f"PORTAL 0{i+1}"
+        p.font.name = FONT_BODY
+        p.font.size = Pt(10)
+        p.font.bold = True
+        p.font.color.rgb = color
+
+        p_t = tf.add_paragraph()
+        p_t.text = title
+        p_t.font.name = FONT_HEADING
+        p_t.font.size = Pt(14)
+        p_t.font.bold = True
+        p_t.font.color.rgb = TEXT_MAIN
+
+        p_d = tf.add_paragraph()
+        p_d.text = "\n" + desc + "\n\nURL: " + url
+        p_d.font.name = FONT_BODY
+        p_d.font.size = Pt(10.5)
         p_d.font.color.rgb = TEXT_MUTED
 
     output_path = "AI_Research_Analytics_Executive_Briefing.pptx"
