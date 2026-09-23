@@ -406,11 +406,20 @@ def generate_speaker_notes():
     
     add_callout_box(
         doc,
-        "Development & Lead Engineering: Ashish",
-        "Ashish served as the lead developer and engineer, responsible for end-to-end implementation, model orchestration, interactive dashboard development, and cloud deployment.",
+        "Development & Engineering: Ashish",
+        "Ashish served as the developer and engineer, responsible for end-to-end implementation, model orchestration, interactive dashboard development, and cloud deployment.",
         border_color="4F46E5",
         bg_color="EEF2FF"
     )
+
+    p_ft = doc.add_paragraph()
+    p_ft.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    p_ft.paragraph_format.space_before = Pt(20)
+    r_ft = p_ft.add_run("Prepared by Ashish")
+    r_ft.font.name = 'Calibri'
+    r_ft.font.size = Pt(9.5)
+    r_ft.font.italic = True
+    r_ft.font.color.rgb = COLOR_MUTED
 
     out_file = "AI_Research_Analytics_Executive_Speaker_Notes.docx"
     doc.save(out_file)

@@ -68,6 +68,19 @@ def create_deck():
             p.font.size = Pt(13)
             p.font.color.rgb = TEXT_MUTED
 
+        add_footer(slide)
+
+    def add_footer(slide):
+        ft_box = slide.shapes.add_textbox(Inches(9.5), Inches(7.0), Inches(3.0), Inches(0.35))
+        tf = ft_box.text_frame
+        tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
+        p = tf.paragraphs[0]
+        p.text = "Prepared by Ashish"
+        p.alignment = PP_ALIGN.RIGHT
+        p.font.name = FONT_BODY
+        p.font.size = Pt(9)
+        p.font.color.rgb = TEXT_MUTED
+
     def add_card(slide, left, top, width, height, bg_color=SURFACE_CARD, border_color=BORDER_CARD):
         shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
         shape.fill.solid()
@@ -84,6 +97,7 @@ def create_deck():
     # =========================================================================
     s1 = prs.slides.add_slide(blank_layout)
     set_slide_background(s1)
+    add_footer(s1)
 
     add_card(s1, Inches(0.8), Inches(0.8), Inches(11.733), Inches(5.9), bg_color=SURFACE_CARD, border_color=BORDER_CARD)
 
@@ -652,7 +666,7 @@ def create_deck():
     credits_cards = [
         ("Concept & Program Context", "Shirish & Shil", "Shirish presented the original concept and program-level code design. Shil helped establish and shape the program context and analytical framework.", ACCENT_AMBER),
         ("Guidance & Leadership", "Rohan", "Provided continuous strategic guidance, leadership, and project oversight throughout the program lifecycle.", ACCENT_INDIGO),
-        ("Lead Development & Execution", "Ashish", "Lead developer responsible for full-stack implementation, model integration, interactive dashboard development, and deployment.", ACCENT_EMERALD)
+        ("Development & Execution", "Ashish", "Developer responsible for full-stack implementation, model integration, interactive dashboard development, and deployment.", ACCENT_EMERALD)
     ]
 
     card_w = Inches(3.64)
